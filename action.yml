@@ -118,6 +118,7 @@ runs:
       with:
         name: trajectly-results
         path: ${{ inputs.project_root }}/.trajectly/**
+        include-hidden-files: true
         if-no-files-found: ignore
 
     - name: Propagate exit code
