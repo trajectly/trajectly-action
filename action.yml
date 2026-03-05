@@ -19,8 +19,12 @@ inputs:
     description: Python version to use
     required: false
     default: "3.11"
+  trajectly_version:
+    description: Trajectly package version used when install=pypi
+    required: false
+    default: "0.4.2"
   install:
-    description: 'How to install trajectly: "editable" (pip install -e <project_root>) or "pypi" (pip install trajectly)'
+    description: 'How to install trajectly: "editable" (pip install -e <project_root>) or "pypi" (pip install trajectly==<trajectly_version>)'
     required: false
     default: pypi
   comment_pr:
@@ -48,7 +52,7 @@ runs:
         if [ "${{ inputs.install }}" = "editable" ]; then
           python -m pip install -e "${{ inputs.project_root }}"
         else
-          python -m pip install trajectly
+          python -m pip install "trajectly==${{ inputs.trajectly_version }}"
         fi
 
     - name: Run specs
