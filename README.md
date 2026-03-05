@@ -6,7 +6,7 @@ This action is a thin wrapper around the CLI. TRT logic stays in the `trajectly`
 
 ## What it does
 
-1. Installs Trajectly (`pypi` by default)
+1. Installs Trajectly (`pypi` by default, pinned to `trajectly_version`)
 2. Runs `python -m trajectly run ...`
 3. Generates optional PR comment markdown with `python -m trajectly report --pr-comment`
 4. Optionally posts/updates PR comment
@@ -57,7 +57,8 @@ jobs:
 | `spec_glob` | `specs/*.agent.yaml` | Spec files/glob passed to `trajectly run` |
 | `project_root` | `.` | Working directory for run/report steps |
 | `python_version` | `3.11` | Python version installed via `actions/setup-python` |
-| `install` | `pypi` | `pypi` => install from PyPI, `editable` => `pip install -e <project_root>` |
+| `trajectly_version` | `0.4.2` | Trajectly package version used when `install: pypi` |
+| `install` | `pypi` | `pypi` => install `trajectly==<trajectly_version>`, `editable` => `pip install -e <project_root>` |
 | `comment_pr` | `false` | Post/update PR comment with report markdown |
 | `upload_artifacts` | `true` | Upload `${project_root}/.trajectly/**` artifact |
 
@@ -83,4 +84,3 @@ For stronger supply-chain control, pin to immutable refs:
 
 - `vX.Y.Z` tags are immutable releases.
 - Major tags move to latest stable patch release (`v1` -> newest `v1.x.y`).
-
