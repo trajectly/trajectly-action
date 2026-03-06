@@ -38,6 +38,59 @@ jobs:
 - `@v1` tracks the latest stable `v1.x.y` patch release automatically.
 - `@<full_commit_sha>` provides the strongest supply-chain pinning.
 
+## End-to-end demo (pass + regression)
+
+For a full agent demo, use the Procurement Approval demo:
+<https://github.com/trajectly/procurement-approval-demo>
+
+You can run this workflow to see both expected outcomes in one run:
+
+```yaml
+name: Trajectly E2E Demo
+on: [workflow_dispatch]
+
+jobs:
+  pass:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: trajectly/trajectly-action@v1.0.1
+        with:
+          spec_glob: "specs/trt-procurement-agent-baseline.agent.yaml"
+          project_root: "."
+
+  regression_expected_failure:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - id: regression
+        uses: trajectly/trajectly-action@v1.0.1
+        continue-on-error: true
+        with:
+          spec_glob: "specs/trt-procurement-agent-regression.agent.yaml"
+          project_root: "."
+      - name: Assert regression is intentional
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ steps.regression.outcome }}" != "failure" ]; then
+            echo "Expected regression run to fail."
+            exit 1
+          fi
+          test -f .trajectly/reports/latest.md
+          grep -F 'trt: `FAIL`' .trajectly/reports/latest.md
+```
+
+Expected results:
+
+- `pass` job: action succeeds and report includes `trt: \`PASS\``.
+- `regression_expected_failure` job: action step fails with regression (`exit code 1`), and the assertion step confirms `trt: \`FAIL\``.
+- Artifacts (when enabled) include `.trajectly/reports/latest.md`, `.trajectly/reports/latest.json`, and repro files under `.trajectly/repros/`.
+
 ## PR comment usage
 
 Enable PR comments explicitly and grant `pull-requests: write`.
