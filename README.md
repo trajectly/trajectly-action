@@ -43,6 +43,10 @@ jobs:
 For a full agent demo, use the Procurement Approval demo:
 <https://github.com/trajectly/procurement-approval-demo>
 
+Full walkthroughs with detailed observed outputs:
+- <https://github.com/trajectly/procurement-approval-demo/blob/main/README.md>
+- <https://github.com/trajectly/procurement-approval-demo/blob/main/TUTORIAL.md>
+
 You can run this workflow to see both expected outcomes in one run:
 
 ```yaml
