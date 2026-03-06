@@ -113,6 +113,41 @@ jobs:
           comment_pr: "true"
 ```
 
+## Artifacts (`upload_artifacts`)
+
+When `upload_artifacts: "true"` (default), the action uploads `${project_root}/.trajectly/**`
+as a workflow artifact named `trajectly-results`.
+
+Where artifacts go:
+
+- Stored in GitHub Actions for that workflow run (same repository/run context)
+- Downloadable from the run page under **Artifacts**
+- Access follows your repository/workflow permissions
+- Not uploaded to Trajectly-managed servers by this action
+
+What this usually contains:
+
+- `.trajectly/reports/latest.md` (human-readable summary)
+- `.trajectly/reports/latest.json` (machine-readable summary)
+- `.trajectly/repros/*` (repro payloads, when generated)
+
+Why this is useful:
+
+- Debug regressions from failed CI runs
+- Keep run evidence attached to the workflow
+- Download reports without re-running locally
+
+If you do not want uploads, set:
+
+```yaml
+- uses: trajectly/trajectly-action@v1.0.1
+  with:
+    upload_artifacts: "false"
+```
+
+Note: artifact retention follows your repository/org GitHub Actions settings.
+Review report/repro content before sharing outside your team.
+
 ## Inputs
 
 | Input | Default | Meaning |
@@ -144,6 +179,13 @@ For stronger supply-chain control, pin to immutable refs or a full commit SHA:
 # or
 - uses: trajectly/trajectly-action@<full_commit_sha>
 ```
+
+## Policies and support
+
+- Terms: [TERMS.md](TERMS.md)
+- Privacy: [PRIVACY.md](PRIVACY.md)
+- Support: [SUPPORT.md](SUPPORT.md)
+- Security reporting: [SECURITY.md](SECURITY.md)
 
 ## Release policy
 
