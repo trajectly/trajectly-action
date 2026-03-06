@@ -26,11 +26,17 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
-      - uses: trajectly/trajectly-action@v1
+      - uses: trajectly/trajectly-action@v1.0.1
         with:
           spec_glob: "specs/*.agent.yaml"
           project_root: "."
 ```
+
+## Version selection
+
+- `@v1.0.1` is the recommended default for reproducible runs.
+- `@v1` tracks the latest stable `v1.x.y` patch release automatically.
+- `@<full_commit_sha>` provides the strongest supply-chain pinning.
 
 ## PR comment usage
 
@@ -45,7 +51,7 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v4
-      - uses: trajectly/trajectly-action@v1
+      - uses: trajectly/trajectly-action@v1.0.1
         with:
           comment_pr: "true"
 ```
@@ -72,10 +78,12 @@ jobs:
 
 ## Security and pinning
 
-For stronger supply-chain control, pin to immutable refs:
+For stronger supply-chain control, pin to immutable refs or a full commit SHA:
 
 ```yaml
-- uses: trajectly/trajectly-action@v1.0.0
+- uses: trajectly/trajectly-action@v1.0.1
+# or track stable v1 patch updates
+- uses: trajectly/trajectly-action@v1
 # or
 - uses: trajectly/trajectly-action@<full_commit_sha>
 ```
