@@ -10,7 +10,7 @@ This action is a thin wrapper around the CLI. TRT logic stays in the `trajectly`
 2. Runs `python -m trajectly run ...`
 3. Generates optional PR comment markdown with `python -m trajectly report --pr-comment`
 4. Optionally posts/updates PR comment
-5. Optionally uploads `.trajectly/**` artifacts
+5. Optionally stores `.trajectly/**` as a GitHub Actions artifact
 6. Exits with the run verdict code (`0/1/2`)
 
 ## Minimal usage (read-only permissions)
@@ -115,15 +115,15 @@ jobs:
 
 ## Artifacts (`upload_artifacts`)
 
-When `upload_artifacts: "true"` (default), the action uploads `${project_root}/.trajectly/**`
-as a workflow artifact named `trajectly-results`.
+When `upload_artifacts: "true"` (default), the action stores `${project_root}/.trajectly/**`
+as a GitHub Actions artifact named `trajectly-results`.
 
 Where artifacts go:
 
-- Stored in GitHub Actions for that workflow run (same repository/run context)
+- Stored in GitHub Actions artifact storage for that workflow run
 - Downloadable from the run page under **Artifacts**
 - Access follows your repository/workflow permissions
-- Not uploaded to Trajectly-managed servers by this action
+- Not sent anywhere else by this action
 
 What this usually contains:
 
@@ -137,7 +137,7 @@ Why this is useful:
 - Keep run evidence attached to the workflow
 - Download reports without re-running locally
 
-If you do not want uploads, set:
+If you do not want the action to store a GitHub Actions artifact, set:
 
 ```yaml
 - uses: trajectly/trajectly-action@v1.0.1
@@ -158,7 +158,7 @@ Review report/repro content before sharing outside your team.
 | `trajectly_version` | `0.4.2` | Trajectly package version used when `install: pypi` |
 | `install` | `pypi` | `pypi` => install `trajectly==<trajectly_version>`, `editable` => `pip install -e <project_root>` |
 | `comment_pr` | `false` | Post/update PR comment with report markdown |
-| `upload_artifacts` | `true` | Upload `${project_root}/.trajectly/**` artifact |
+| `upload_artifacts` | `true` | Store `${project_root}/.trajectly/**` as a GitHub Actions artifact |
 
 ## Exit codes
 
