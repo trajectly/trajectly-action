@@ -13,6 +13,8 @@ This action is a thin wrapper around the CLI. TRT logic stays in the `trajectly`
 5. Optionally stores `.trajectly/**` as a GitHub Actions artifact
 6. Exits with the run verdict code (`0/1/2`)
 
+When a spec fails, the PR gets the witness step, the violated contract, a one-command repro, and a minimized counterexample. No log hunting. No guesswork.
+
 ## Minimal usage (read-only permissions)
 
 ```yaml
@@ -40,14 +42,9 @@ jobs:
 
 ## End-to-end demo (pass + regression)
 
-For a full agent demo, use the Procurement Approval demo:
-<https://github.com/trajectly/procurement-approval-demo>
+Use the [Merge or Die arena](https://github.com/trajectly/trajectly-survival-arena) for a full working example.
 
-Full walkthroughs with detailed observed outputs:
-- <https://github.com/trajectly/procurement-approval-demo/blob/main/README.md>
-- <https://github.com/trajectly/procurement-approval-demo/blob/main/TUTORIAL.md>
-
-You can run this workflow to see both expected outcomes in one run:
+This workflow runs a passing baseline and an intentional regression in one go:
 
 ```yaml
 name: Trajectly E2E Demo
@@ -62,7 +59,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: trajectly/trajectly-action@v1.0.1
         with:
-          spec_glob: "specs/trt-procurement-agent-baseline.agent.yaml"
+          spec_glob: "specs/challenges/procurement-chaos.agent.yaml"
           project_root: "."
 
   regression_expected_failure:
@@ -75,7 +72,7 @@ jobs:
         uses: trajectly/trajectly-action@v1.0.1
         continue-on-error: true
         with:
-          spec_glob: "specs/trt-procurement-agent-regression.agent.yaml"
+          spec_glob: "specs/examples/procurement-chaos-regression.agent.yaml"
           project_root: "."
       - name: Assert regression is intentional
         shell: bash
@@ -91,9 +88,24 @@ jobs:
 
 Expected results:
 
-- `pass` job: action succeeds and report includes `trt: \`PASS\``.
-- `regression_expected_failure` job: action step fails with regression (`exit code 1`), and the assertion step confirms `trt: \`FAIL\``.
+- `pass` job: action succeeds, report shows `trt: PASS`.
+- `regression_expected_failure` job: action step fails with regression (`exit 1`), report shows:
+
+```text
+- `procurement-chaos`: regression
+  - trt: `FAIL` (witness=6)
+  - code: REFINEMENT_BASELINE_CALL_MISSING
+  - detail: missing_call=route_for_approval
+```
+
 - Artifacts (when enabled) include `.trajectly/reports/latest.md`, `.trajectly/reports/latest.json`, and repro files under `.trajectly/repros/`.
+
+After a failure, debug locally:
+
+```bash
+python -m trajectly repro procurement-chaos    # replay the exact failure
+python -m trajectly shrink                      # 14 events -> 3
+```
 
 ## PR comment usage
 
@@ -112,6 +124,8 @@ jobs:
         with:
           comment_pr: "true"
 ```
+
+The PR comment includes the witness index, violation code, and repro command for every failing spec.
 
 ## Artifacts (`upload_artifacts`)
 
@@ -133,9 +147,9 @@ What this usually contains:
 
 Why this is useful:
 
-- Debug regressions from failed CI runs
+- Debug regressions from failed CI runs without re-running locally
 - Keep run evidence attached to the workflow
-- Download reports without re-running locally
+- Download reports and repro files for offline triage
 
 If you do not want the action to store a GitHub Actions artifact, set:
 
