@@ -17,6 +17,8 @@ When a spec fails, the PR gets the witness step, the violated contract, a one-co
 
 ## Minimal usage (read-only permissions)
 
+> **Prerequisite**: Your repository must have a `.trajectly/` workspace (created by `python -m trajectly init`) and committed baselines under `.trajectly/baselines/`. See the [Guide](https://github.com/trajectly/trajectly/blob/main/docs/trajectly_guide.md) for setup.
+
 ```yaml
 name: Trajectly
 on: [push, pull_request]
