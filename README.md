@@ -28,7 +28,7 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
-      - uses: trajectly/trajectly-action@v1.0.1
+      - uses: trajectly/trajectly-action@v1.0.2
         with:
           spec_glob: "specs/*.agent.yaml"
           project_root: "."
@@ -36,7 +36,7 @@ jobs:
 
 ## Version selection
 
-- `@v1.0.1` is the recommended default for reproducible runs.
+- `@v1.0.2` is the recommended default for reproducible runs.
 - `@v1` tracks the latest stable `v1.x.y` patch release automatically.
 - `@<full_commit_sha>` provides the strongest supply-chain pinning.
 
@@ -57,7 +57,7 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
-      - uses: trajectly/trajectly-action@v1.0.1
+      - uses: trajectly/trajectly-action@v1.0.2
         with:
           spec_glob: "specs/challenges/procurement-chaos.agent.yaml"
           project_root: "."
@@ -69,7 +69,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: regression
-        uses: trajectly/trajectly-action@v1.0.1
+        uses: trajectly/trajectly-action@v1.0.2
         continue-on-error: true
         with:
           spec_glob: "specs/examples/procurement-chaos-regression.agent.yaml"
@@ -120,7 +120,7 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v4
-      - uses: trajectly/trajectly-action@v1.0.1
+      - uses: trajectly/trajectly-action@v1.0.2
         with:
           comment_pr: "true"
 ```
@@ -154,7 +154,7 @@ Why this is useful:
 If you do not want the action to store a GitHub Actions artifact, set:
 
 ```yaml
-- uses: trajectly/trajectly-action@v1.0.1
+- uses: trajectly/trajectly-action@v1.0.2
   with:
     upload_artifacts: "false"
 ```
@@ -187,7 +187,7 @@ Review report/repro content before sharing outside your team.
 For stronger supply-chain control, pin to immutable refs or a full commit SHA:
 
 ```yaml
-- uses: trajectly/trajectly-action@v1.0.1
+- uses: trajectly/trajectly-action@v1.0.2
 # or track stable v1 patch updates
 - uses: trajectly/trajectly-action@v1
 # or
