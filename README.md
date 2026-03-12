@@ -1,5 +1,7 @@
 # Trajectly GitHub Action
 
+[![CodeQL](https://github.com/trajectly/trajectly-action/actions/workflows/codeql.yml/badge.svg)](https://github.com/trajectly/trajectly-action/actions/workflows/codeql.yml)
+
 Official GitHub Action for running Trajectly deterministic regression checks in CI.
 
 This action is a thin wrapper around the CLI. TRT logic stays in the `trajectly` package.
