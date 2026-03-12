@@ -36,4 +36,3 @@ Target process:
 ## Scope
 
 This policy covers this repository (`trajectly/trajectly-action`).
-

@@ -37,4 +37,3 @@ Users control behavior through:
 - repository secrets
 - action inputs (`comment_pr`, `upload_artifacts`)
 - artifact retention settings in GitHub
-

@@ -24,4 +24,3 @@ Users are responsible for compliance with GitHub Terms and any third-party provi
 
 These terms may be updated in future releases.
 Continued use after updates constitutes acceptance of the updated terms.
-

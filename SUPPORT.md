@@ -23,4 +23,3 @@ Support is best-effort and focused on:
 - no guaranteed response time or resolution time
 - no consulting or custom integration services
 - no compatibility guarantees for every third-party dependency or runner image
-
