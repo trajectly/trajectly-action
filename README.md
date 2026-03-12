@@ -2,6 +2,7 @@
 
 [![CodeQL](https://github.com/trajectly/trajectly-action/actions/workflows/codeql.yml/badge.svg)](https://github.com/trajectly/trajectly-action/actions/workflows/codeql.yml)
 [![CI](https://github.com/trajectly/trajectly-action/actions/workflows/ci.yml/badge.svg)](https://github.com/trajectly/trajectly-action/actions/workflows/ci.yml)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/trajectly/trajectly-action/badge)](https://scorecard.dev/viewer/?uri=github.com/trajectly/trajectly-action)
 
 Official GitHub Action for running Trajectly deterministic regression checks in CI.
 
